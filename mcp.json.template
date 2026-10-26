@@ -1,0 +1,30 @@
+{
+  "_comment": "可移植模板：请将 ${EM_COPILOT_ROOT} 替换为本机 em-copilot 项目根目录（含 .venv）。原交付版本内嵌了工作站绝对路径 D:\\HCX\\HFSS\\em-copilot，已移除以避免环境耦合。",
+  "mcpServers": {
+    "pyaedt-em": {
+      "command": "${EM_COPILOT_ROOT}/.venv/Scripts/ansys-aedt-mcp.exe",
+      "args": [
+        "--include-context"
+      ],
+      "env": {
+        "HTTP_PROXY": "",
+        "HTTPS_PROXY": "",
+        "NO_PROXY": "*"
+      }
+    },
+    "em-copilot-mcp": {
+      "command": "${EM_COPILOT_ROOT}/.venv/Scripts/python.exe",
+      "args": [
+        "-m",
+        "em_copilot.mcp",
+        "--transport",
+        "stdio"
+      ],
+      "env": {
+        "HTTP_PROXY": "",
+        "HTTPS_PROXY": "",
+        "NO_PROXY": "*"
+      }
+    }
+  }
+}

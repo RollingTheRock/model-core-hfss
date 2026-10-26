@@ -1,0 +1,33 @@
+# Cloud-desktop locked dependency manifest for PyAEDT EM Copilot.
+#
+# These are the ansys/mcp extras NOT declared in pyproject.toml (which only
+# pins numpy/scipy/matplotlib/pydantic). Install them into the SAME venv after
+# `pip install -e .` so envcheck probes pass. Versions verified PASS together on
+# 2026-09-03 (docs/version-manifest.md) + typer 0.27.2 added 2026-09-09.
+#
+# Install (cloud desktop, PowerShell, with proxy for pip):
+#   $env:HTTP_PROXY  = "http://proxy.xfusion.com:8080"
+#   $env:HTTPS_PROXY = "http://proxy.xfusion.com:8080"
+#   pip install -r requirements-cloud.txt --trusted-host pypi.org `
+#       --trusted-host files.pythonhosted.org --trusted-host pypi.python.org
+#
+# NOTE: em-copilot-core itself is installed separately via `pip install -e .`
+# BEFORE this file (it is an editable local package, not a PyPI pin).
+
+# --- Official AEDT MCP execution layer (used as-is, unmodified) ---
+ansys-aedt-mcp==0.1.4
+ansys-common-mcp==0.3.3
+
+# --- PyAEDT runtime (invoked by the MCP server, not by em_copilot directly) ---
+pyaedt==1.5.0
+pyedb==0.83.0
+ansys-edb-core==0.3.3
+
+# --- MCP framework (ansys-aedt-mcp depends on these; locked to prevent drift) ---
+fastmcp==4.0.2
+mcp==2.1.1
+
+# --- pyaedt CLI session discovery (discover_available_aedt_sessions) ---
+# Without this, envcheck reports pkg:typer as WARN and check_aedt_status /
+# session discovery cannot enumerate local AEDT sessions.
+typer==0.27.2
