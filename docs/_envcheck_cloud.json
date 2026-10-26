@@ -1,0 +1,205 @@
+{
+  "checks": [
+    {
+      "name": "python",
+      "status": "pass",
+      "detail": "3.12.10 on win32",
+      "data": {
+        "version": "3.12.10",
+        "platform": "win32"
+      }
+    },
+    {
+      "name": "pkg:em-copilot-core",
+      "status": "pass",
+      "detail": "0.1.dev0",
+      "data": {
+        "version": "0.1.dev0",
+        "optional": false
+      }
+    },
+    {
+      "name": "pkg:ansys-aedt-mcp",
+      "status": "pass",
+      "detail": "0.1.4",
+      "data": {
+        "version": "0.1.4",
+        "optional": false
+      }
+    },
+    {
+      "name": "pkg:ansys-common-mcp",
+      "status": "pass",
+      "detail": "0.3.3",
+      "data": {
+        "version": "0.3.3",
+        "optional": false
+      }
+    },
+    {
+      "name": "pkg:pyaedt",
+      "status": "pass",
+      "detail": "1.5.0",
+      "data": {
+        "version": "1.5.0",
+        "optional": false
+      }
+    },
+    {
+      "name": "pkg:pyedb",
+      "status": "pass",
+      "detail": "0.83.0",
+      "data": {
+        "version": "0.83.0",
+        "optional": false
+      }
+    },
+    {
+      "name": "pkg:ansys-edb-core",
+      "status": "pass",
+      "detail": "0.3.3",
+      "data": {
+        "version": "0.3.3",
+        "optional": false
+      }
+    },
+    {
+      "name": "pkg:fastmcp",
+      "status": "pass",
+      "detail": "4.0.2",
+      "data": {
+        "version": "4.0.2",
+        "optional": false
+      }
+    },
+    {
+      "name": "pkg:mcp",
+      "status": "pass",
+      "detail": "2.1.1",
+      "data": {
+        "version": "2.1.1",
+        "optional": false
+      }
+    },
+    {
+      "name": "pkg:numpy",
+      "status": "pass",
+      "detail": "2.5.3",
+      "data": {
+        "version": "2.5.3",
+        "optional": false
+      }
+    },
+    {
+      "name": "pkg:scipy",
+      "status": "pass",
+      "detail": "1.18.1",
+      "data": {
+        "version": "1.18.1",
+        "optional": false
+      }
+    },
+    {
+      "name": "pkg:matplotlib",
+      "status": "pass",
+      "detail": "3.11.1",
+      "data": {
+        "version": "3.11.1",
+        "optional": false
+      }
+    },
+    {
+      "name": "pkg:pydantic",
+      "status": "pass",
+      "detail": "2.13.5",
+      "data": {
+        "version": "2.13.5",
+        "optional": false
+      }
+    },
+    {
+      "name": "pkg:typer",
+      "status": "pass",
+      "detail": "0.27.2",
+      "data": {
+        "version": "0.27.2",
+        "optional": true
+      }
+    },
+    {
+      "name": "pkg:click",
+      "status": "pass",
+      "detail": "8.5.0",
+      "data": {
+        "version": "8.5.0",
+        "optional": true
+      }
+    },
+    {
+      "name": "em_copilot.import",
+      "status": "pass",
+      "detail": "em_copilot 0.1.dev0 imports cleanly",
+      "data": {
+        "version": "0.1.dev0"
+      }
+    },
+    {
+      "name": "mcp.cli",
+      "status": "pass",
+      "detail": "ansys-aedt-mcp --help exit 0 (has --transport)",
+      "data": {
+        "exe": "D:\\HCX\\HFSS\\em-copilot\\.venv\\Scripts\\ansys-aedt-mcp.exe",
+        "returncode": 0
+      }
+    },
+    {
+      "name": "mcp.tools",
+      "status": "pass",
+      "detail": "20 tools registered",
+      "data": {
+        "count": 20,
+        "tools": [
+          "analyze_design",
+          "check_aedt_installed",
+          "check_aedt_status",
+          "clear_aedt",
+          "connect_to_aedt",
+          "create_design",
+          "disconnect_from_aedt",
+          "export_config",
+          "export_results",
+          "get_guidelines_for",
+          "get_model_info",
+          "get_pyaedt_logs",
+          "launch_aedt",
+          "list_designs",
+          "list_projects",
+          "open_project",
+          "run_python_code",
+          "run_python_script",
+          "save_project",
+          "screenshot"
+        ]
+      }
+    },
+    {
+      "name": "aedt.install",
+      "status": "pass",
+      "detail": "AEDT installed: ['2025.2', '2025.2AWP']",
+      "data": {
+        "installed_versions": [
+          "2025.2",
+          "2025.2AWP"
+        ],
+        "current_version": "2025.2",
+        "latest_version": "2025.2"
+      }
+    }
+  ],
+  "summary": {
+    "fail": 0,
+    "warn": 0,
+    "blocked": 0,
+    "pass": 19
+  }
+}
