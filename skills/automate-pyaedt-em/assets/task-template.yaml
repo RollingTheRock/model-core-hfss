@@ -1,0 +1,78 @@
+# SimulationTask template (roadmap §6.2 / §7.5).
+# Copy this file, fill in the task-specific fields, and validate with
+# `python skills/automate-pyaedt-em/scripts/validate_task.py task.yaml`.
+# State machine (roadmap §6.3): DRAFT -> VALIDATING -> NEEDS_INPUT ->
+# READY_FOR_REVIEW -> APPROVED -> RUNNING -> POST_PROCESSING -> COMPLETED.
+# Exceptions: REJECTED / FAILED / CANCELLED / PARTIAL_SUCCESS.
+
+task_id: "2026-0001"                    # stable, unique
+state: DRAFT                            # do not advance to APPROVED until validated
+design_type: hfss                       # hfss | hfss3d_layout | q3d | circuit
+
+input:
+  project_path: "path/to/channel.aedt"  # read-only; copy-before-run, never edit in place
+  design: "HFSSDesign1"
+  setup: "Setup1"
+  sweep: "Sweep1"
+  input_hash: ""                        # sha256[:16] of the input, recorded at preflight
+
+objective:
+  quantities:
+    - Sdd21
+    - Sdd11
+    - TDR
+  acceptance:
+    - expression: Sdd21                 # Sdd11|Sdd21|Sdc21|Scd21|Scc11|Scc21|NEXT|FEXT|IL_margin|RL_margin
+      operator: ">="                    # >=|<=|>|<|==
+      value: -10.0                      # dB for S-params; unit per expression
+      frequency: 5.0e9                  # Hz
+      unit: dB
+      description: "Insertion loss at Nyquist"
+
+ports:
+  - name: "DP1_P"
+    type: wave                          # wave | lumped
+    reference_conductor: "GND"          # the return path; must be a reference net, not a signal
+    positive: 1                         # 1-based physical port index
+    negative: 2
+  - name: "DP1_N"
+    type: wave
+    reference_conductor: "GND"
+    positive: 3
+    negative: 4
+
+frequency:
+  start: 0.0                           # Hz; include 0 (DC) if TDR is required
+  stop: 10.0e9
+  step: 10.0e6
+  sweep_type: discrete                  # discrete | fast | interpolating
+
+mesh:
+  max_passes: 12
+  min_passes: 3
+  delta_s: 0.01
+  energy_error_target: 0.01
+
+post_processing:
+  mixed_mode_pairs:
+    - name: "DP1"
+      positive: 1                       # 1-based physical port index of the P side
+      negative: 2                       # 1-based physical port index of the N side
+  reference_impedance: 50.0             # ohms, single-ended
+  compute_tdr: true
+  tdr_max_time: 5.0e-9                  # s
+  points_of_interest: [1.0e9, 5.0e9, 10.0e9]
+
+outputs:
+  - touchstone
+  - convergence
+  - profile
+  - mesh_stats
+  - report_md
+  - metrics_json
+  - plots
+
+run:
+  run_dir: ""                           # task run directory; outputs go here, NOT back to input
+  smoke_solve: true                     # 2-3 passes before the full solve
+  estimated_cost_class: medium          # small | medium | large — for L3 confirmation
