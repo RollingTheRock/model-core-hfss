@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<title>单端传输线 S 参数报告 — coax_sol50_Design</title>
+<style>:root{--bg:#fafbfc;--surface:#fff;--ink:#1a1f2b;--ink2:#4a5568;--ink3:#889;--line:#e2e8f0;--accent:#0e6e6e;--accent-soft:#e2f1f1;--done:#1a7f4b;--na:#889;--err:#b06a00}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#11151d;--surface:#181d27;--ink:#e6eaf0;--ink2:#aab2c0;--ink3:#7e8696;--line:#262c38;--accent:#46c4c4;--accent-soft:#163434;--done:#5fd394;--na:#7e8696;--err:#e3a84b}}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){.banner{background:#1a2029}.tile{background:#181d27}table.metrics th{background:#1a2029}table.metrics tr:hover{background:#1a2029}}}*{box-sizing:border-box}body{font-family:-apple-system,'Segoe UI',Roboto,sans-serif;margin:0;background:var(--bg);color:var(--ink);line-height:1.6;padding:32px 24px}.wrap{max-width:900px;margin:0 auto}h1{font-size:1.65rem;margin:0 0 4px;color:var(--ink)}h2{font-size:1.18rem;margin:36px 0 12px;color:var(--ink);border-bottom:2px solid var(--accent);padding-bottom:4px}h3{font-size:1rem;margin:20px 0 8px}.topline{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);margin-bottom:8px}.banner{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--accent);padding:12px 16px;border-radius:4px;margin:12px 0 0;font-size:.85rem;color:var(--ink2)}.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:20px 0 28px}.tile{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:14px}.tile .k{font-size:.65rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);margin-bottom:6px}.tile .v{font-size:1.4rem;font-weight:700;line-height:1;color:var(--ink)}.tile .v.done{color:var(--done)}.tile .v.na{color:var(--na)}.tile .v.err{color:var(--err)}.tile .s{font-size:.72rem;color:var(--ink2);margin-top:5px}table.metrics{border-collapse:collapse;margin:8px 0 16px;width:100%;font-size:.88rem}table.metrics th,table.metrics td{border:1px solid var(--line);padding:6px 10px}table.metrics th{background:var(--surface);text-align:left;color:var(--ink2);font-weight:600;width:35%}table.metrics tr:hover{background:var(--surface)}.pass{color:var(--done);font-weight:bold}.fail{color:var(--err);font-weight:bold}.na{color:var(--na);font-weight:bold}.err{color:var(--err);font-weight:bold}img{max-width:100%;height:auto;border:1px solid var(--line);border-radius:4px;margin:8px 0;display:block}.figcap{font-size:.8rem;color:var(--ink3);margin:-4px 0 16px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}@media(max-width:640px){.tiles{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}}code{font-family:'SF Mono',Consolas,monospace;font-size:.85em;background:var(--surface);padding:1px 5px;border-radius:3px}.footer{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-size:.75rem;color:var(--ink3)}</style></head><body><div class='wrap'>
+<div class="topline">EM Copilot · S 参数自动分析报告（单端）</div>
+<h1>单端传输线 S 参数报告</h1>
+<div style="font-size:.9rem;color:var(--ink2);margin-bottom:4px"><code>coax_sol50_Design-single</code> · coax</div>
+<div class="banner">生成时间由程序确定。数值由确定性代码生成，AI 仅生成解释。路线图 §13.3：计算结果与 AI 建议明确分离。</div>
+<div class="tiles">
+<div class="tile"><div class="k">频率点数</div><div class="v">11</div><div class="s">1.000 GHz ~ 3.000 GHz</div></div>
+<div class="tile"><div class="k">端口数</div><div class="v">2</div><div class="s">单端 2 端口</div></div>
+<div class="tile"><div class="k">S21 最差</div><div class="v">-224.93 dB</div><div class="s">插损 worst case</div></div>
+<div class="tile"><div class="k">S11 最差</div><div class="v">-0.01 dB</div><div class="s">回损 worst case</div></div>
+</div>
+<h2>1. 模型概览</h2>
+<img src="model_preview.jpg" alt="model preview" style="max-height:400px;width:auto;margin:0 auto">
+<div class="figcap">图 0：coax_sol50_Design 设计 3D 模型预览（求解前）。</div>
+<h2>2. 输入文件与版本</h2>
+<table class="metrics"><thead><tr><th>属性</th><th>值</th></tr></thead><tbody><tr><td>类型</td><td>单端 / Touchstone 自动分析</td></tr><tr><td>设计</td><td>coax_sol50_Design</td></tr><tr><td>模板</td><td>coax</td></tr><tr><td>输入文件</td><td>D:\HCX\HFSS\em-copilot\demo_output\run_coax_sol50\coax_sol50_Design_sweep.s2p</td></tr><tr><td>输入 SHA-256</td><td>1125d175e8155957</td></tr><tr><td>频率范围</td><td>1.000 GHz ~ 3.000 GHz</td></tr><tr><td>频率点数</td><td>11</td></tr><tr><td>端口数</td><td>2</td></tr><tr><td>原始格式</td><td>MA</td></tr><tr><td>原始频率单位</td><td>ghz</td></tr><tr><td>参考阻抗 Z0</td><td>50.0 Ω</td></tr></tbody></table>
+<h2>3. Preflight 检查</h2>
+<p>✅ 端口数、频率范围、单调性、数值有效性检查全部通过</p>
+<h2>4. 网格收敛</h2>
+<img src="plots/convergence.png" alt="convergence">
+<div class="figcap">图 1：自适应网格细化收敛过程（蓝色柱：四面体数；橙色线：ΔS 收敛值）。</div>
+<h2>5. S 参数结果</h2>
+<img src="plots/s_parameters.png" alt="S-parameters">
+<div class="figcap">图 2：coax_sol50_Design 单端 S 参数（S11 回损 @端口1 / S21 插损 1→2）。</div>
+<h3>5.1 最差情形（worst case）</h3>
+<table class="metrics"><thead><tr><th>指标</th><th>最差值</th></tr></thead><tbody><tr><td>S11_worst_dB</td><td>-0.010</td></tr><tr><td>S11_worst_freq_GHz</td><td>3.000</td></tr><tr><td>S21_worst_dB</td><td>-224.930</td></tr><tr><td>S21_worst_freq_GHz</td><td>1.000</td></tr><tr><td>S11_min_over_band_dB</td><td>-0.010</td></tr></tbody></table>
+<h2>6. 指定频点结果</h2>
+<table class="metrics"><thead><tr><th>频率</th><th>S11 (回损, dB)</th><th>S21 (插损, dB)</th></tr></thead><tbody><tr><td>1.000 GHz</td><td>-0.01 dB</td><td>-224.93 dB</td></tr><tr><td>3.000 GHz</td><td>-0.01 dB</td><td>-202.04 dB</td></tr></tbody></table>
+<h2>7. 串扰</h2>
+<p>本模板为单端 2 端口链路，无独立串扰对，NEXT/FEXT 不适用（需 ≥3 个差分端口才有独立串扰对）。</p>
+<h2>8. TDR / 阻抗结果</h2>
+<p>单端模板未计算 TDR（需差分对/端口对才能估计共模阻抗）。</p>
+<h2>9. 验收规则</h2>
+<p>➖ 未定义验收规则 — 状态为 NOT EVALUATED（仅分析，未做合规判定）。</p>
+<h2>10. 可复现信息</h2>
+<p>结构化结果同时写入 <code>metrics.json</code>。</p>
+<p>本报告中所有数值由 <code>em_copilot</code> 确定性代码生成，未经 AI 修改。</p>
+<div class="footer">EM Copilot · 自动生成 · 确定性数值 + AI 解释分离（§13.3）</div>
+</div></body></html>

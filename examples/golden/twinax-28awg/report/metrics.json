@@ -1,0 +1,67 @@
+{
+  "task_id": "run_session",
+  "touchstone": "D:\\HCX\\HFSS\\em-copilot\\runs\\twinaxial-demo-001\\run_session\\Twinaxial_cable_28AWG_sweep.s4p",
+  "pair": "Pair1",
+  "compliance": "NOT_EVALUATED",
+  "pass_fail": false,
+  "worst_case": {
+    "Sdd11_dB_worst": -88.14311113966656,
+    "Sdd21_dB_worst": -0.09661042163573477,
+    "Scd21_dB_worst": -36.74193855361258,
+    "Sdc21_dB_worst": -36.74168971614338,
+    "Sdd12_dB_worst": -0.09661042163572794,
+    "Scd12_dB_worst": -36.74168971614437,
+    "Sdc12_dB_worst": -36.741938553611554,
+    "worst_Sdd21_freq_hz": 10000000000.0
+  },
+  "points_of_interest": [
+    {
+      "frequency_hz": 1000000000.0,
+      "frequency_requested_hz": 1000000000.0,
+      "frequency_actual_hz": 1000000000.0,
+      "frequency_error_hz": 0.0,
+      "frequency_in_tolerance": true,
+      "frequency_index": 20,
+      "Sdd11_dB": -88.95780576659081,
+      "Sdd22_dB": -89.02948585767444,
+      "Scc11_dB": -86.59779445629958,
+      "Sdd21_dB": -0.0322505651292027,
+      "Scc21_dB": -0.03229138432030345,
+      "Scd21_dB": -56.89906424017061,
+      "Sdc21_dB": -56.89673514601577,
+      "Sdd12_dB": -0.032250565129102036,
+      "Scc12_dB": -0.03229138432021246,
+      "Scd12_dB": -56.896735265212655,
+      "Sdc12_dB": -56.89906423148309,
+      "frequency": "1.000 GHz"
+    },
+    {
+      "frequency_hz": 3000000000.0,
+      "frequency_requested_hz": 3000000000.0,
+      "frequency_actual_hz": 3000000000.0,
+      "frequency_error_hz": 0.0,
+      "frequency_in_tolerance": true,
+      "frequency_index": 60,
+      "Sdd11_dB": -89.31989136503992,
+      "Sdd22_dB": -89.44078647586338,
+      "Scc11_dB": -86.60570921951448,
+      "Sdd21_dB": -0.04905966412731161,
+      "Scc21_dB": -0.04916337946093387,
+      "Scd21_dB": -47.24353785743627,
+      "Sdc21_dB": -47.24269230728459,
+      "Sdd12_dB": -0.04905966412722822,
+      "Scc12_dB": -0.04916337946083592,
+      "Scd12_dB": -47.24269230928074,
+      "Sdc12_dB": -47.24353786360038,
+      "frequency": "3.000 GHz"
+    }
+  ],
+  "acceptance": [],
+  "warnings": [],
+  "input_hash": "22297f3f736f0009",
+  "n_freqs": 201,
+  "freq_range_hz": [
+    0.0,
+    10000000000.0
+  ]
+}

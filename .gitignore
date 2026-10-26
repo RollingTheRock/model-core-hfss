@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+
+# 测试与静态检查缓存
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# 虚拟环境
+.venv/
+venv/
+
+# 运行时产物（由 CLI 生成，不入库）
+runs/
+demo_output/
+*.log
+
+# HFSS / AEDT 求解结果（体积大，按需单独归档）
+*.aedtresults/
+*.pyaedt/
+*.asol
+*.tmp
+
+# 本地 MCP 配置（含本机绝对路径，请用 mcp.json.template 生成）
+.mcp.json
+.claude/
+
+# 编辑器与系统
+.idea/
+.vscode/
+Thumbs.db
+.DS_Store

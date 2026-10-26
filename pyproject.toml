@@ -1,0 +1,56 @@
+[build-system]
+requires = ["flit_core >=3.2,<5"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "em-copilot-core"
+version = "0.1.dev0"
+description = "Enterprise EM simulation copilot domain package — Touchstone/SI analysis (HFSS-license-free)."
+readme = "README.md"
+requires-python = ">=3.12,<4"
+authors = [{ name = "CicadaOvO" }]
+license = "Apache-2.0"
+keywords = ["em", "hfss", "pyaedt", "touchstone", "s-parameters", "signal-integrity", "mcp"]
+dependencies = [
+    "numpy>=1.26",
+    "scipy>=1.11",
+    "matplotlib>=3.7",
+    "pydantic>=2",
+]
+
+# Optional: needed by pyaedt CLI session discovery (discover_available_aedt_sessions)
+# and by the official ansys-aedt-mcp check_aedt_status path. Install on workstations
+# that probe live AEDT sessions. See docs/mcp-capability-gap.md §差距-2.
+[project.optional-dependencies]
+aedt-discovery = ["typer"]
+mcp = [
+    "ansys-aedt-mcp>=0.1.4",   # provides ansys.common.mcp base + ansys.aedt.core
+    "fastmcp>=4.0",
+]
+dev = ["pytest>=7", "ruff>=0.4"]
+
+[project.scripts]
+em-copilot = "em_copilot.cli:main"
+em-copilot-envcheck = "em_copilot.envcheck:main"
+em-copilot-mcp = "em_copilot.mcp.server:launcher"
+
+[tool.flit.module]
+name = "em_copilot"
+
+[tool.ruff]
+line-length = 100
+lint.select = ["E", "F", "I", "N", "PTH"]
+lint.per-file-ignores."__init__.py" = ["F401"]
+# `T` is the conventional name for the orthonormal single-ended → mixed-mode
+# matrix (Bockelman–Dixon–Wilson); renaming it to lowercase hurts the math
+# readability in both the source and the tests that mirror it.
+lint.per-file-ignores."src/em_copilot/mixed_mode.py" = ["N806"]
+lint.per-file-ignores."tests/test_mixed_mode.py" = ["N806"]
+
+# Pin the pytest root here so it does NOT walk up to a parent project's
+# pyproject.toml (e.g. D:\workspace\pyproject.toml belonging to ansys.fluent.mcp)
+# and inherit its --cov addopts, which require pytest-cov and break collection.
+[tool.pytest.ini_options]
+minversion = "7.0"
+testpaths = ["tests"]
+addopts = []

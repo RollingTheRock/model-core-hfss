@@ -1,0 +1,35 @@
+{
+  "task_id": "coax_sol50_Design-single",
+  "touchstone": "D:\\HCX\\HFSS\\em-copilot\\demo_output\\run_coax_sol50\\coax_sol50_Design_sweep.s2p",
+  "design_name": "coax_sol50_Design",
+  "template": "coax",
+  "kind": "single",
+  "worst_case": {
+    "S11_worst_dB": -0.01,
+    "S11_worst_freq_GHz": 3.0,
+    "S21_worst_dB": -224.93,
+    "S21_worst_freq_GHz": 1.0,
+    "S11_min_over_band_dB": -0.01
+  },
+  "points_of_interest": [
+    [
+      "1.000 GHz",
+      "-0.01 dB",
+      "-224.93 dB"
+    ],
+    [
+      "3.000 GHz",
+      "-0.01 dB",
+      "-202.04 dB"
+    ]
+  ],
+  "acceptance": [],
+  "warnings": [],
+  "input_hash": "1125d175e8155957",
+  "n_freqs": 11,
+  "freq_range_hz": [
+    1000000000.0,
+    3000000000.0
+  ],
+  "n_ports": 2
+}

@@ -1,0 +1,315 @@
+<title>em-copilot 进展汇报</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --bg:#f6f7f9; --surface:#ffffff; --ink:#1a1f2b; --ink-2:#475063; --ink-3:#76829a;
+    --line:#e3e7ee; --line-2:#d4dae3;
+    --accent:#0e6e6e; --accent-soft:#e2f1f1;
+    --done:#1a7f4b; --done-soft:#e4f3ea;
+    --blocked:#b06a00; --blocked-soft:#fbeed6;
+    --plan:#5a6577; --plan-soft:#eceef2;
+    --sweep-grad:linear-gradient(90deg,#0e6e6e 0%,#3aa9a9 50%,#0e6e6e 100%);
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#11151d; --surface:#181d27; --ink:#e6eaf0; --ink-2:#aab2c0; --ink-3:#7e8696;
+      --line:#262c38; --line-2:#323a49;
+      --accent:#46c4c4; --accent-soft:#163434;
+      --done:#5fd394; --done-soft:#14361f;
+      --blocked:#e3a84b; --blocked-soft:#3a2a0c;
+      --plan:#9aa4b5; --plan-soft:#222730;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#11151d; --surface:#181d27; --ink:#e6eaf0; --ink-2:#aab2c0; --ink-3:#7e8696;
+    --line:#262c38; --line-2:#323a49;
+    --accent:#46c4c4; --accent-soft:#163434;
+    --done:#5fd394; --done-soft:#14361f;
+    --blocked:#e3a84b; --blocked-soft:#3a2a0c;
+    --plan:#9aa4b5; --plan-soft:#222730;
+  }
+  *{box-sizing:border-box}
+  html{font-size:16.5px}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:"Noto Sans SC",-apple-system,"Segoe UI",sans-serif;
+    line-height:1.7; -webkit-font-smoothing:antialiased;
+    padding:40px 20px 72px; font-size:1rem;
+  }
+  .wrap{max-width:760px; margin:0 auto}
+  .mono{font-family:"IBM Plex Mono",ui-monospace,monospace; font-variant-numeric:tabular-nums}
+
+  /* ---- top bar ---- */
+  .topline{display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+    font-size:.72rem; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--ink-3); font-family:"IBM Plex Mono",monospace; margin-bottom:30px}
+  .topline .dot{width:7px; height:7px; border-radius:50%; background:var(--accent); flex:none}
+
+  h1{font-size:2.05rem; line-height:1.18; font-weight:900; letter-spacing:-.01em;
+     margin:0 0 10px; text-wrap:balance}
+  .lead{font-size:1.06rem; color:var(--ink-2); margin:0 0 14px; max-width:42em; line-height:1.62}
+  .meta{font-size:.78rem; color:var(--ink-3); font-family:"IBM Plex Mono",monospace}
+
+  /* ---- status tiles ---- */
+  .tiles{display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin:26px 0 6px}
+  .tile{background:var(--surface); border:1px solid var(--line); border-radius:8px; padding:14px 14px 13px}
+  .tile .k{font-size:.66rem; letter-spacing:.07em; text-transform:uppercase; color:var(--ink-3);
+    font-family:"IBM Plex Mono",monospace; margin-bottom:7px}
+  .tile .v{font-size:1.42rem; font-weight:700; line-height:1; font-family:"IBM Plex Mono",monospace;
+    color:var(--ink)}
+  .tile .s{font-size:.74rem; color:var(--ink-2); margin-top:6px; line-height:1.4}
+
+  /* ---- sweep axis (real demo data) ---- */
+  .axis-box{background:var(--surface); border:1px solid var(--line); border-radius:8px;
+    padding:18px 20px 14px; margin:12px 0 4px}
+  .axis-box .ax-label{font-size:.7rem; letter-spacing:.07em; text-transform:uppercase;
+    color:var(--ink-3); font-family:"IBM Plex Mono",monospace; margin-bottom:14px}
+  .axis{height:5px; background:var(--sweep-grad); border-radius:3px; position:relative; margin:20px 4px 14px}
+  .tick{position:absolute; top:-5px; width:1.5px; height:15px; background:var(--ink); opacity:.28}
+  .tick.major{opacity:.55; height:18px}
+  .axis-scale{display:flex; justify-content:space-between; font-size:.68rem; color:var(--ink-3);
+    font-family:"IBM Plex Mono",monospace; margin:0 2px}
+  .axis-cap{font-size:.76rem; color:var(--ink-2); margin:12px 0 0; line-height:1.5}
+  .axis-cap b{color:var(--accent); font-weight:600}
+
+  /* ---- sections ---- */
+  section{margin-top:40px}
+  h2{font-size:1.16rem; font-weight:700; margin:0 0 4px; letter-spacing:-.005em; text-wrap:balance;
+    display:flex; align-items:baseline; gap:10px}
+  .secno{font-family:"IBM Plex Mono",monospace; font-size:.74rem; font-weight:500; color:var(--accent);
+    letter-spacing:.04em}
+  .sec-sub{font-size:.8rem; color:var(--ink-3); margin:0 0 16px; font-family:"IBM Plex Mono",monospace}
+  p{margin:0 0 12px}
+  p + p{margin-top:-4px}
+  .body{color:var(--ink-2); font-size:.97rem}
+
+  /* ---- list ---- */
+  ul.list{list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:0}
+  ul.list li{position:relative; padding:9px 0 9px 28px; border-top:1px solid var(--line);
+    font-size:.93rem; color:var(--ink)}
+  ul.list li:last-child{border-bottom:1px solid var(--line)}
+  ul.list li .num{position:absolute; left:0; top:9px; font-family:"IBM Plex Mono",monospace;
+    font-size:.76rem; color:var(--ink-3); font-weight:500}
+  ul.list li b{font-weight:600}
+  ul.list li .desc{color:var(--ink-2); font-size:.88rem; margin-top:2px}
+
+  /* ---- pill ---- */
+  .pill{display:inline-flex; align-items:center; gap:5px; font-size:.68rem; font-weight:600;
+    padding:2px 9px; border-radius:999px; font-family:"IBM Plex Mono",monospace;
+    letter-spacing:.03em; white-space:nowrap; vertical-align:middle}
+  .pill::before{content:""; width:6px; height:6px; border-radius:50%; flex:none}
+  .pill.done{background:var(--done-soft); color:var(--done)}
+  .pill.done::before{background:var(--done)}
+  .pill.blocked{background:var(--blocked-soft); color:var(--blocked)}
+  .pill.blocked::before{background:var(--blocked)}
+  .pill.plan{background:var(--plan-soft); color:var(--plan)}
+  .pill.plan::before{background:var(--plan)}
+
+  /* ---- problem card ---- */
+  .pcard{background:var(--surface); border:1px solid var(--line-2); border-radius:8px;
+    padding:16px 18px; margin:4px 0 4px}
+  .pcard .pt{font-size:.7rem; letter-spacing:.07em; text-transform:uppercase; color:var(--blocked);
+    font-family:"IBM Plex Mono",monospace; margin-bottom:7px}
+  .pcard p{font-size:.92rem; color:var(--ink-2); margin:0}
+  .pcard p + p{margin-top:8px}
+
+  /* ---- roadmap ---- */
+  .phases{display:flex; flex-direction:column; gap:0; margin-top:8px}
+  .phase{display:grid; grid-template-columns:90px 1fr; gap:16px; padding:14px 0;
+    border-top:1px solid var(--line)}
+  .phase:last-child{border-bottom:1px solid var(--line)}
+  .phase .ph-tag{font-family:"IBM Plex Mono",monospace; font-size:.7rem; letter-spacing:.05em;
+    text-transform:uppercase; color:var(--ink-3); padding-top:3px}
+  .phase .ph-now .ph-tag{color:var(--accent); font-weight:600}
+  .phase h3{font-size:.98rem; font-weight:600; margin:0 0 5px; color:var(--ink)}
+  .phase p{font-size:.88rem; color:var(--ink-2); margin:0; line-height:1.55}
+  .phase .ph-now h3 .pill{margin-left:6px; transform:translateY(-1px)}
+
+  /* ---- options ---- */
+  .opts{display:flex; flex-direction:column; gap:8px; margin-top:4px}
+  .opt{display:grid; grid-template-columns:auto 1fr; gap:12px; align-items:start;
+    background:var(--surface); border:1px solid var(--line); border-radius:7px; padding:12px 14px}
+  .opt .oc{font-family:"IBM Plex Mono",monospace; font-size:.74rem; font-weight:600;
+    color:var(--accent); padding-top:1px}
+  .opt .ot{font-size:.88rem; color:var(--ink); font-weight:500; margin:0 0 3px}
+  .opt .od{font-size:.84rem; color:var(--ink-2); margin:0; line-height:1.55}
+
+  footer{margin-top:48px; padding-top:20px; border-top:1px solid var(--line);
+    font-size:.74rem; color:var(--ink-3); font-family:"IBM Plex Mono",monospace; line-height:1.6}
+
+  @media (max-width:560px){
+    html{font-size:15.5px}
+    h1{font-size:1.7rem}
+    .tiles{grid-template-columns:repeat(2,1fr)}
+    .phase{grid-template-columns:1fr; gap:4px}
+    .phase .ph-tag{padding-top:0}
+    .opt{grid-template-columns:1fr; gap:4px}
+  }
+</style>
+
+<div class="wrap">
+
+  <div class="topline">
+    <span class="dot"></span>
+    <span>EM Copilot · 进展汇报</span>
+    <span style="opacity:.5">/</span>
+    <span>面向：领导审阅</span>
+  </div>
+
+  <h1>电磁仿真提效工具：做了什么、卡在哪、下一步</h1>
+  <p class="lead">这份报告说明 em-copilot（一个把 HFSS 电磁仿真流程自动化、并自动出报告的辅助工具）目前的进展：跑通了完整流程、发现了一个关键障碍、以及接下来的规划路线。技术细节尽量说人话。</p>
+  <p class="meta">2026-09-11　·　汇报人：h50012464　·　版本 v0.1 阶段</p>
+
+  <!-- ====== STATUS TILES ====== -->
+  <div class="tiles">
+    <div class="tile">
+      <div class="k">整体进度</div>
+      <div class="v">≈ 40%</div>
+      <div class="s">流程已跑通，自动化骨架待打通</div>
+    </div>
+    <div class="tile">
+      <div class="k">已验证</div>
+      <div class="v">8 / 8 步</div>
+      <div class="s">演示用 Twinaxial 线缆全程跑完</div>
+    </div>
+    <div class="tile">
+      <div class="k">当前状态</div>
+      <div class="v" style="color:var(--blocked)">受阻</div>
+      <div class="s">一个连接问题待定方向</div>
+    </div>
+    <div class="tile">
+      <div class="k">License</div>
+      <div class="v" style="color:var(--done)">已释放</div>
+      <div class="s">AEDT 进程已结束，占用清零</div>
+    </div>
+  </div>
+
+  <!-- ====== SWEEP AXIS (real demo data, not decoration) ====== -->
+  <div class="axis-box">
+    <div class="ax-label">演示产物 · 频率扫描 S 参数（真实输出）</div>
+    <div class="axis">
+      <span class="tick major" style="left:0%"></span>
+      <span class="tick" style="left:5%"></span>
+      <span class="tick" style="left:10%"></span>
+      <span class="tick" style="left:15%"></span>
+      <span class="tick" style="left:20%"></span>
+      <span class="tick major" style="left:25%"></span>
+      <span class="tick" style="left:30%"></span>
+      <span class="tick" style="left:35%"></span>
+      <span class="tick" style="left:40%"></span>
+      <span class="tick" style="left:45%"></span>
+      <span class="tick major" style="left:50%"></span>
+      <span class="tick" style="left:55%"></span>
+      <span class="tick" style="left:60%"></span>
+      <span class="tick" style="left:65%"></span>
+      <span class="tick" style="left:70%"></span>
+      <span class="tick major" style="left:75%"></span>
+      <span class="tick" style="left:80%"></span>
+      <span class="tick" style="left:85%"></span>
+      <span class="tick" style="left:90%"></span>
+      <span class="tick" style="left:95%"></span>
+      <span class="tick major" style="left:100%"></span>
+    </div>
+    <div class="axis-scale"><span class="mono">0 GHz</span><span class="mono">2.5</span><span class="mono">5</span><span class="mono">7.5</span><span class="mono">10 GHz</span></div>
+    <p class="axis-cap">扫描范围 <b>0 – 10 GHz</b>，共 <b>201 个频率点</b>，4 端口差分线缆的 S 参数矩阵。这是按设计文件期望、完整跑通一次仿真后拿到的真实数据 —— 不是单点近似。</p>
+  </div>
+
+  <!-- ====== 一、做了什么 ====== -->
+  <section>
+    <h2><span class="secno">01</span>做了什么</h2>
+    <p class="sec-sub">对照设计文件 8 步流程，用一根双轴差分线缆做了一次完整演示</p>
+    <ul class="list">
+      <li><span class="num">①</span><b>跑通完整仿真流程</b>
+        <div class="desc">从打开工程 → 网格检查 → 求解设置 → 跑仿真 → 导出 S 参数 → 出报告，按设计文件的 8 个步骤全部走完，每一步都验证了实际产物。</div></li>
+      <li><span class="num">②</span><b>发现官方导出工具的一个坑</b>
+        <div class="desc">官方工具默认只导出"单个频率点"（3 GHz）的 S 参数，而不是我们需要的整段频率扫描（0–10 GHz 共 201 个点）。这意味着如果直接用官方工具，工程师拿到的数据是不完整的。我们定位了根因，并找到了正确导出整段扫描的方法。</div></li>
+      <li><span class="num">③</span><b>搭好了自研工具的骨架</b>
+        <div class="desc">为了彻底解决上一条的问题，我们决定自建一个"导出整段频率扫描 S 参数"的工具（叫 export_touchstone_sweep）。目前骨架已完成：服务器能启动、能响应指令、工具已注册。它的目标是不需要工程师写任何代码，一键拿到完整 201 个频率点的数据。</div></li>
+      <li><span class="num">④</span><b>对照设计文件做了合规核对</b>
+        <div class="desc">把实际跑的流程和设计文件（roadmap）逐条比对，确认哪些达标、哪些有缺口。结论：核心流程对得上，自研工具这块是设计文件里规划过、但官方工具没覆盖的空白。</div></li>
+    </ul>
+  </section>
+
+  <!-- ====== 二、存在问题 ====== -->
+  <section>
+    <h2><span class="secno">02</span>存在什么问题</h2>
+    <p class="sec-sub">一个关键的连接障碍，卡住了自研工具的最后一公里</p>
+    <div class="pcard">
+      <div class="pt">问题 · 一个进程连不上另一个进程</div>
+      <p><b>情况</b>：我们的自研工具是个独立程序，它需要"连上"已经启动的 HFSS 仿真软件来干活。但验证发现：这个独立程序连不上 —— 一发起连接就卡住不动，超过 40 秒没有任何反应。</p>
+      <p><b>不是网络问题</b>：底层的网络通道是通的（能连上端口、对方有响应），但卡在了软件握手这一层。HFSS 的接口似乎不支持"两个程序同时连进来"。</p>
+      <p><b>已处置</b>：之前为了让卡死的进程退出，强制结束过几次，导致 HFSS 的连接注册表被搞坏，连官方工具都连不上了。<b>已重启 HFSS 并释放了 license 占用</b>，目前环境是干净的。</p>
+    </div>
+  </section>
+
+  <!-- ====== 三、怎么解决 ====== -->
+  <section>
+    <h2><span class="secno">03</span>怎么解决</h2>
+    <p class="sec-sub">有三条路，各有利弊，需要定方向</p>
+    <div class="opts">
+      <div class="opt">
+        <span class="oc">方案 A</span>
+        <div>
+          <p class="ot">在干净的 HFSS 上再试一次独立连接</p>
+          <p class="od">先重启 HFSS，在新环境下重新测连接。如果连得上，说明之前的卡死只是环境脏了导致；如果还是连不上，就确认这是根本性限制，必须换方案。风险最低，能明确判断是"偶发"还是"必然"。</p>
+        </div>
+      </div>
+      <div class="opt">
+        <span class="oc">方案 B</span>
+        <div>
+          <p class="ot">把自研工具并进官方工具进程里</p>
+          <p class="od">不让自研工具独立运行，而是"寄生"在官方工具的进程内部，直接用官方工具已经连好的通道干活。彻底没有连接问题。代价：和官方工具的内部结构耦合，官方一升级我们可能要跟着改（这正是当初想避免的）。</p>
+        </div>
+      </div>
+      <div class="opt">
+        <span class="oc">方案 C</span>
+        <div>
+          <p class="ot">让自研工具"请官方工具代跑"</p>
+          <p class="od">自研工具保持独立，但需要干活时，把活派给官方工具里的"跑代码"能力去执行。连接没问题（活是在官方进程里干的）。代价：设计文件里有一条纪律——业务流程不能依赖"跑任意代码"，这个方案会突破这条纪律，需要评估是否能接受。</p>
+        </div>
+      </div>
+    </div>
+    <p class="body" style="margin-top:14px"><b>我的倾向</b>：先用方案 A 在干净环境验一次（成本几乎为零，且能给后续决策提供确凿依据）。如果 A 证明确实连不上，再在 B 和 C 之间选 —— B 更稳但耦合，C 更独立但要放宽纪律。</p>
+  </section>
+
+  <!-- ====== 四、未来规划 ====== -->
+  <section>
+    <h2><span class="secno">04</span>未来规划路线</h2>
+    <p class="sec-sub">目标：把"跑通一次"变成"一键自动跑完并出报告"</p>
+    <div class="phases">
+      <div class="phase ph-now">
+        <div class="ph-tag">当前</div>
+        <div>
+          <h3>打通自研工具的连接 <span class="pill blocked">受阻中</span></h3>
+          <p>解决上面的连接问题，让 export_touchstone_sweep 能真正连上 HFSS 并跑通，产出完整的 201 频率点 S 参数文件。这是后续一切自动化的前提。</p>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="ph-tag">阶段 2</div>
+        <div>
+          <h3>把 8 步流程封装成"任务"</h3>
+          <p>把现在手工一步步跑的流程，包装成"提交一个任务 → 自动排队 → 跑完取结果"的模式。工程师不用盯着每一步，提交后等通知即可。状态机（任务在排队/跑/完成）的代码骨架已写好。</p>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="ph-tag">阶段 3</div>
+        <div>
+          <h3>一键跑完整条流程</h3>
+          <p>把 8 个步骤串成一条命令：给个工程文件，自动完成从求解到导出的全过程，中间无需人工干预。这一步把"提效"从"省几步操作"升级到"省掉整段流程的人工"。</p>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="ph-tag">阶段 4</div>
+        <div>
+          <h3>自动生成完整报告</h3>
+          <p>仿真跑完后，自动把 HFSS 的结果数据和信号完整性分析合并，生成一份结构完整的报告（按设计文件规划的章节）。工程师拿到就是成品，不用再手动拼数据。<b>按领导要求，仿真结果本身的评估仍由工程师负责，工具只负责"跑通 + 出报告"。</b></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    报告生成于 2026-09-11　·　数据来源：Twinaxial_cable_28AWG 演示运行　·　设计依据：pyaedt-em-copilot 技术路线图 v1.1
+  </footer>
+
+</div>
